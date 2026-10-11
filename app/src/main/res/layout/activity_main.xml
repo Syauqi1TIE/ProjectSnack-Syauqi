@@ -12,29 +12,70 @@
         android:id="@+id/WelcomeMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinsregular"
         android:text="Are You Ready?"
-        android:fontFamily="@font/jetbrainsmonoregular"
-        android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="32dp"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.314" />
+        app:layout_constraintVertical_bias="0.28" />
 
-    <Button
-        android:id="@+id/btnToSnack"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play!"
-        android:fontFamily="@font/jetbrainsmonoregular"
-        android:backgroundTint="#4E1303"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@id/WelcomeMsg"
+        app:layout_constraintVertical_bias="0.3">
+
+        <Button
+            android:id="@+id/btnPilihanLogin"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:backgroundTint="#C23B22"
+            android:fontFamily="@font/poppinsregular"
+            android:text="Pilihan Login"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnToSnack"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#4E1303"
+            android:fontFamily="@font/poppinsregular"
+            android:text="Play!"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:text="Logout"
+            android:backgroundTint="#B30000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnProfile"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FFE800"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Profil Developer" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
