@@ -21,6 +21,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        binding.btnPilihanLogin.setOnClickListener {
+            val intent = Intent(this, PilihanLoginActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnToSnack.setOnClickListener {
             val intent = Intent(this, Snack::class.java)
             startActivity(intent)

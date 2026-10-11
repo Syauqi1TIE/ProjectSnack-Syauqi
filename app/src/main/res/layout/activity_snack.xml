@@ -37,7 +37,7 @@
         android:layout_height="219dp"
         android:text="@string/KomposisiSnack"
         android:textStyle="bold"
-        android:fontFamily="@font/jetbrainsmonoregular"
+        android:fontFamily="@font/poppinsregular"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

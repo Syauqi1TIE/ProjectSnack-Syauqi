@@ -3,4 +3,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#23395D</color>
+
+    <!-- Brand Colors from Grand Design -->
+    <color name="brand_cream">#FBF6EC</color>
+    <color name="brand_terracotta">#C23B22</color>
+    <color name="brand_dark_navy">#1F2937</color>
+    <color name="brand_dark_brown">#542417</color>
+    <color name="brand_deep_brown">#4E1303</color>
+    <color name="brand_accent_red">#8B2817</color>
+    <color name="brand_card_bg">#CC4E1303</color>
+    <color name="brand_input_bg">#F3EFEA</color>
 </resources>
