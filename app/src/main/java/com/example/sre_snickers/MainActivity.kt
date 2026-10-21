@@ -1,6 +1,6 @@
 
 package com.example.sre_snickers
-
+//oki
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
