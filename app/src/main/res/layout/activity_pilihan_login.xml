@@ -25,9 +25,9 @@
     <!-- Top Logo / Header Section -->
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="Sobremesa Logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +38,11 @@
         android:id="@+id/tvBrandName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/poppinsregular"
         android:text="Sobremesa"
         android:textColor="@color/brand_cream"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,18 +81,18 @@
             android:fontFamily="@font/poppinsregular"
             android:text="Get started"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvSubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/poppinsregular"
             android:text="Dari hati untuk pecinta kopi dan roti"
             android:textColor="@color/brand_cream"
-            android:textSize="13sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <!-- Bottom Buttons Section -->
@@ -102,9 +102,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -117,7 +117,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnToRegister"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_secondary"
@@ -125,13 +125,13 @@
                 android:text="Register"
                 android:textAllCaps="false"
                 android:textColor="@color/brand_dark_brown"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnToLogin"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button_primary"
@@ -139,7 +139,7 @@
                 android:text="Login"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -147,16 +147,31 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnToWebView"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_button_outline"
             android:fontFamily="@font/poppinsregular"
             android:text="🌐 Buka Website (WebView)"
             android:textAllCaps="false"
             android:textColor="@color/brand_cream"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/brand_deep_brown"
+        app:itemIconTint="@drawable/bottom_nav_color"
+        app:itemTextColor="@drawable/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:elevation="10dp"
+        app:menu="@menu/bottom_navigation_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

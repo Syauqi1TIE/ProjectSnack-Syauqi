@@ -31,7 +31,6 @@ class AuthActivity : AppCompatActivity() {
         // Kondisi jika isLogin bernilai true
         val isLogin = sharedPref.getBoolean("isLogin", false)
         if (isLogin) {
-            // Panggil Intent untuk ke MainActivity
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -44,13 +43,21 @@ class AuthActivity : AppCompatActivity() {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
+            // Ambil data username dan password dari SharedPreferences
+            val spUsername = sharedPref.getString("username", "") ?: ""
+            val spPassword = sharedPref.getString("password", "") ?: ""
+
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Silakan isi Username dan Password!", Toast.LENGTH_SHORT).show()
-            } else if (username == password) {
+            } else if ((username == password) || (spUsername.isNotEmpty() && username == spUsername && password == spPassword)) {
+                // Rule 1: username == password
+                // Rule 2: username == username di SharedPreferences dan password == password di SharedPreferences
                 val editor = sharedPref.edit()
                 editor.putBoolean("isLogin", true)
-                editor.putString("username", username)
+                editor.putString("current_username", username)
                 editor.apply()
+
+                Toast.makeText(this, "Login Berhasil! Selamat datang, $username", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -58,7 +65,7 @@ class AuthActivity : AppCompatActivity() {
             } else {
                 AlertDialog.Builder(this)
                     .setTitle("Login Gagal")
-                    .setMessage("Silahkan coba lagi")
+                    .setMessage("Username atau password salah! Silahkan coba lagi.")
                     .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
                     .show()
             }

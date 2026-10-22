@@ -20,9 +20,11 @@ class ProfileActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
+
+        setupBottomNavigation(binding.bottomNavigation, R.id.nav_profile)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
@@ -33,5 +35,10 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/imsyauqiii"))
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.bottomNavigation.selectedItemId = R.id.nav_profile
     }
 }

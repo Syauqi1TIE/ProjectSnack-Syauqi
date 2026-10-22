@@ -1,7 +1,7 @@
-
 package com.example.sre_snickers
-//oki
+
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -37,40 +37,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Bottom Navigation
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-
-            when (item.itemId) {
-
-                // Menu Profil
-                R.id.nav_profile -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                // Menu Akun
-                R.id.nav_login -> {
-                    val intent = Intent(this, PilihanLoginActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                // Menu Snack
-                R.id.nav_snack -> {
-                    val intent = Intent(this, Snack::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                else -> false
-            }
-        }
+        // Setup Bottom Navigation
+        setupBottomNavigation(binding.bottomNavigation, 0)
 
         // Tombol Jelajahi Snack
         binding.btnToSnack.setOnClickListener {
             val intent = Intent(this, Snack::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, 0, 0)
+                overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, 0)
+            } else {
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
+            }
         }
 
         // Shared Preferences

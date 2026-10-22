@@ -17,11 +17,13 @@ class PilihanLoginActivity : AppCompatActivity() {
         binding = ActivityPilihanLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
+
+        setupBottomNavigation(binding.bottomNavigation, R.id.nav_login)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
@@ -39,5 +41,10 @@ class PilihanLoginActivity : AppCompatActivity() {
             val intent = Intent(this, WebViewActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.bottomNavigation.selectedItemId = R.id.nav_login
     }
 }
