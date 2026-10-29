@@ -15,6 +15,17 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        val isLogin = sharedPref.getBoolean("isLogin", false)
+        if (isLogin) {
+            val intent = Intent(this, BerandaActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -29,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        // val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
 
         binding.btnLoginSubmit.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
@@ -40,9 +51,8 @@ class LoginActivity : AppCompatActivity() {
 
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Silakan isi Username dan Password!", Toast.LENGTH_SHORT).show()
-            } else if ((username == password) || (spUsername.isNotEmpty() && username == spUsername && password == spPassword)) {
-                // Rule 1: username == password
-                // Rule 2: username == username di SharedPreferences dan password == password di SharedPreferences
+            } else if (spUsername.isNotEmpty() && username == spUsername && password == spPassword) {
+                // Rule: username == username di SharedPreferences dan password == password di SharedPreferences
                 val editor = sharedPref.edit()
                 editor.putBoolean("isLogin", true)
                 editor.putString("current_username", username)
@@ -50,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Login Berhasil! Selamat datang, $username", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, BerandaActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()

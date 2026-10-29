@@ -14,6 +14,17 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        val isLogin = sharedPref.getBoolean("isLogin", false)
+        if (!isLogin) {
+            val intent = Intent(this, PilihanLoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -24,7 +35,7 @@ class ProfileActivity : AppCompatActivity() {
             insets
         }
 
-        setupBottomNavigation(binding.bottomNavigation, R.id.nav_profile)
+        setupToolbarLogout(binding.toolbar)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
@@ -35,10 +46,5 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/imsyauqiii"))
             startActivity(intent)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.bottomNavigation.selectedItemId = R.id.nav_profile
     }
 }

@@ -13,6 +13,17 @@ class PilihanLoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        val isLogin = sharedPref.getBoolean("isLogin", false)
+        if (isLogin) {
+            val intent = Intent(this, BerandaActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         binding = ActivityPilihanLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -22,8 +33,6 @@ class PilihanLoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
-
-        setupBottomNavigation(binding.bottomNavigation, R.id.nav_login)
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
@@ -41,10 +50,5 @@ class PilihanLoginActivity : AppCompatActivity() {
             val intent = Intent(this, WebViewActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.bottomNavigation.selectedItemId = R.id.nav_login
     }
 }

@@ -17,6 +17,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        val isLogin = sharedPref.getBoolean("isLogin", false)
+        if (!isLogin) {
+            val intent = Intent(this, PilihanLoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         // Tombol Jelajahi Snack
         binding.btnToSnack.setOnClickListener {
-            val intent = Intent(this, Snack::class.java)
+            val intent = Intent(this, DaftarMenuActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -55,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Shared Preferences
-        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
+        // val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
 
         // Tombol Logout
         binding.btnLogout.setOnClickListener {
@@ -67,7 +77,8 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton("Ya") { dialog, _ ->
 
                     val editor = sharedPref.edit()
-                    editor.clear()
+                    editor.putBoolean("isLogin", false)
+                    editor.remove("current_username")
                     editor.apply()
 
                     dialog.dismiss()

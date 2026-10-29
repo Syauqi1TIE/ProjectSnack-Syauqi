@@ -38,7 +38,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
             val isLogin = sharedPref.getBoolean("isLogin", false)
 
-            val target = if (isLogin) MainActivity::class.java else PilihanLoginActivity::class.java
+            val target = if (isLogin) BerandaActivity::class.java else PilihanLoginActivity::class.java
             startActivity(Intent(this@SplashScreenActivity, target))
             finish()
         }

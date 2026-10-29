@@ -18,6 +18,7 @@
         app:navigationIconTint="@color/brand_cream"
         app:title="Profil Developer"
         app:titleTextColor="@color/brand_cream"
+        app:menu="@menu/toolbar_member_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
