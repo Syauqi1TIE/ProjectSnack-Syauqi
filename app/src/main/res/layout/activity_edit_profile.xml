@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brand_dark_brown"
+    tools:context=".EditProfileActivity">
+
+    <!-- Top Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/brand_deep_brown"
+        app:navigationIcon="@android:drawable/ic_menu_revert"
+        app:navigationIconTint="@color/brand_cream"
+        app:title="Edit Profil"
+        app:titleTextColor="@color/brand_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Card Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_translucent"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Header Banner with Logo -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="Logo"
+                        android:src="@drawable/sobremessa" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="14dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinsregular"
+                            android:text="Perbarui Profil"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinsregular"
+                            android:text="Ubah informasi akun member Anda"
+                            android:textColor="@color/brand_cream"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Nama Lengkap -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Lengkap"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etEditFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_input_field"
+                    android:fontFamily="@font/poppinsregular"
+                    android:hint="Nama Lengkap"
+                    android:inputType="textPersonName"
+                    android:drawableStart="@android:drawable/ic_menu_edit"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/brand_dark_navy"
+                    android:textSize="14sp"
+                    android:autofillHints="name"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Email (Read-Only) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email / Gmail (Terkunci)"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etEditEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_input_field"
+                    android:fontFamily="@font/poppinsregular"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#777777"
+                    android:drawableStart="@android:drawable/ic_menu_info_details"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textSize="14sp"
+                    android:autofillHints="emailAddress"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Tanggal Lahir -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Lahir"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etEditDob"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_input_field"
+                    android:fontFamily="@font/poppinsregular"
+                    android:hint="DD/MM/YYYY"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    android:drawableStart="@android:drawable/ic_menu_my_calendar"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/brand_dark_navy"
+                    android:textSize="14sp"
+                    android:autofillHints="birthDate"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Jenis Kelamin -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jenis Kelamin"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <RadioGroup
+                    android:id="@+id/rgEditGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+                    <RadioButton
+                        android:id="@+id/rbEditMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Laki-laki"
+                        android:textColor="@color/brand_dark_navy"
+                        android:layout_marginEnd="20dp" />
+                    <RadioButton
+                        android:id="@+id/rbEditFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perempuan"
+                        android:textColor="@color/brand_dark_navy" />
+                </RadioGroup>
+
+                <!-- Username -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etEditUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_input_field"
+                    android:fontFamily="@font/poppinsregular"
+                    android:hint="Username"
+                    android:inputType="textPersonName"
+                    android:drawableStart="@android:drawable/ic_menu_edit"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/brand_dark_navy"
+                    android:textSize="14sp"
+                    android:autofillHints="username"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Password -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password Baru"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etEditPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_input_field"
+                    android:fontFamily="@font/poppinsregular"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:drawableStart="@android:drawable/ic_lock_lock"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/brand_dark_navy"
+                    android:textSize="14sp"
+                    android:autofillHints="password"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Confirm Password -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Konfirmasi Password"
+                    android:textColor="@color/brand_cream"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+                <EditText
+                    android:id="@+id/etEditConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_input_field"
+                    android:fontFamily="@font/poppinsregular"
+                    android:hint="Konfirmasi Password"
+                    android:inputType="textPassword"
+                    android:drawableStart="@android:drawable/ic_lock_lock"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="@color/brand_dark_navy"
+                    android:textSize="14sp"
+                    android:autofillHints="password"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- Save Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSaveEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:fontFamily="@font/poppinsregular"
+                    android:text="Simpan Perubahan"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/brand_terracotta"
+                    app:cornerRadius="14dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
