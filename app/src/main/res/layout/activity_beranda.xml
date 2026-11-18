@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/brand_dark_brown"
+    android:background="@drawable/backgroundsobremessa"
     tools:context=".BerandaActivity">
 
     <!-- Top Toolbar -->
@@ -172,11 +172,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="160dp">
 
-                    <!-- Empty Placeholder Background -->
-                    <View
+                    <!-- Banner Image Background -->
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/brand_deep_brown" />
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/backgroundsobremessa"
+                        android:contentDescription="Banner Sobremesa" />
 
                     <View
                         android:layout_width="match_parent"
@@ -298,6 +300,99 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Layanan Membership"
+                android:textColor="@color/brand_cream"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPromo"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardBackgroundColor="@color/brand_cream">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="🎁\nPromo Member"
+                        android:textColor="@color/brand_dark_brown"
+                        android:textStyle="bold"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardRewards"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardBackgroundColor="@color/brand_cream">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="⭐\nTukar Poin"
+                        android:textColor="@color/brand_dark_brown"
+                        android:textStyle="bold"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardBackgroundColor="@color/brand_cream">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="🧾\nRiwayat Transaksi"
+                        android:textColor="@color/brand_dark_brown"
+                        android:textStyle="bold"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMember"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardBackgroundColor="@color/brand_cream">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="💳\nKartu Member"
+                        android:textColor="@color/brand_dark_brown"
+                        android:textStyle="bold"/>
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+
             <!-- Section Header: Pilihan untukmu -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -350,11 +445,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <!-- Empty Placeholder View -->
-                        <View
+                        <!-- Product Image -->
+                        <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
-                            android:background="#DDDDDD" />
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/beef"
+                            android:contentDescription="Beef Steak Croissant" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -366,7 +463,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinsregular"
-                                android:text="Monk Blanc"
+                                android:text="Beef Steak Croissant"
                                 android:textColor="@color/brand_dark_navy"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -383,7 +480,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/poppinsregular"
-                                    android:text="Rp 25K"
+                                    android:text="Rp 45K"
                                     android:textColor="@color/brand_terracotta"
                                     android:textSize="13sp"
                                     android:textStyle="bold" />
@@ -416,11 +513,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <!-- Empty Placeholder View -->
-                        <View
+                        <!-- Product Image -->
+                        <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
-                            android:background="#DDDDDD" />
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/cake"
+                            android:contentDescription="Strawberry Shortcake" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -432,7 +531,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinsregular"
-                                android:text="Sourdough Mezzarella"
+                                android:text="Strawberry Shortcake"
                                 android:textColor="@color/brand_dark_navy"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
