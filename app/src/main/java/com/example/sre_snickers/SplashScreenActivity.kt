@@ -33,7 +33,7 @@ class SplashScreenActivity : AppCompatActivity() {
         tagline.animate().alpha(1f).setStartDelay(700).setDuration(800).start()
 
         lifecycleScope.launch {
-            delay(4000) // simulasi pengambilan data selama 2 detik
+            delay(1200) // durasi splash screen yang responsif dan cepat
 
             val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
             val isLogin = sharedPref.getBoolean("isLogin", false)

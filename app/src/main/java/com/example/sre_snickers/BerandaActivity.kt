@@ -38,6 +38,30 @@ open class BerandaActivity : AppCompatActivity() {
         setupToolbarLogout(binding.toolbar)
         setupWhatsAppFab(binding.fabWhatsApp)
 
+        // Setup ViewPager2 + DotsIndicator Promo Banner Slider (Modul 11)
+        val banners = listOf(
+            BannerModel(
+                R.drawable.backgroundsobremessa,
+                "PROMO SPESIAL",
+                "Mulai Hari Dengan Rasa Terbaik",
+                "Kopi Dan Roti Fresh Mulai Rp. 20K"
+            ),
+            BannerModel(
+                R.drawable.cake,
+                "DISKON MEMBER",
+                "Hemat 20% Untuk Semua Cake",
+                "Gunakan Poin Member Setiap Hari"
+            ),
+            BannerModel(
+                R.drawable.drink,
+                "NEW BEVERAGE",
+                "Coba Sensasi Kopi Cold Brew Baru",
+                "Segar Nikmat Pas Untuk Bersantai"
+            )
+        )
+        binding.bannerViewPager.adapter = BannerAdapter(banners)
+        binding.bannerDotIndicator.attachTo(binding.bannerViewPager)
+
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }

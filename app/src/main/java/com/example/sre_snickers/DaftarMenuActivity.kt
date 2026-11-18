@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sre_snickers.databinding.ActivityDaftarMenuBinding
+import com.google.android.material.tabs.TabLayout
 
 open class DaftarMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDaftarMenuBinding
@@ -45,10 +46,14 @@ open class DaftarMenuActivity : AppCompatActivity() {
         setupToolbarLogout(binding.toolbar)
         setupWhatsAppFab(binding.fabWhatsApp)
 
+        // 1. Inisialisasi RecyclerView dengan GridLayoutManager 2 kolom (Modul 11)
         binding.rvProducts.layoutManager = GridLayoutManager(this, 2)
         updateProductList()
 
-        setupCategoryChips()
+        // 2. Setup TabLayout Kategori & Badges (Modul 11)
+        setupTabLayout()
+
+        // 3. Setup Pencarian Real-time
         setupSearch()
 
         binding.toolbar.setNavigationOnClickListener {
@@ -72,29 +77,53 @@ open class DaftarMenuActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupCategoryChips() {
-        val chips = listOf(
-            binding.chipAll to "Semua",
-            binding.chipCoffee to "Coffee",
-            binding.chipPastry to "Pastry",
-            binding.chipCake to "Cake"
-        )
+    private fun setupTabLayout() {
+        val categories = listOf("Semua", "Coffee", "Pastry", "Cake")
 
-        chips.forEach { (chip, category) ->
-            chip.setOnClickListener {
-                selectedCategory = category
-                chips.forEach { (c, cat) ->
-                    if (cat == selectedCategory) {
-                        c.setBackgroundResource(R.drawable.bg_button_primary)
-                        c.setTextColor(ContextCompat.getColor(this, R.color.white))
-                    } else {
-                        c.setBackgroundResource(R.drawable.bg_button_secondary)
-                        c.setTextColor(ContextCompat.getColor(this, R.color.brand_dark_brown))
-                    }
+        categories.forEach { category ->
+            val tab = binding.tabLayoutMenu.newTab().setText(category)
+
+            when (category) {
+                "Semua" -> {
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_nav_menu)
+                    val badge = tab.orCreateBadge
+                    badge.number = MenuData.products.size
+                    badge.backgroundColor = ContextCompat.getColor(this, R.color.brand_terracotta)
                 }
-                updateProductList()
+                "Coffee" -> {
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_nav_snack)
+                    val badge = tab.orCreateBadge
+                    badge.number = MenuData.products.count { it.category.equals("Coffee", true) }
+                    badge.backgroundColor = ContextCompat.getColor(this, R.color.brand_terracotta)
+                }
+                "Pastry" -> {
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_nav_snack)
+                    val badge = tab.orCreateBadge
+                    badge.number = MenuData.products.count { it.category.equals("Pastry", true) }
+                    badge.backgroundColor = ContextCompat.getColor(this, R.color.brand_terracotta)
+                }
+                "Cake" -> {
+                    tab.icon = ContextCompat.getDrawable(this, R.drawable.ic_nav_snack)
+                    val badge = tab.orCreateBadge
+                    badge.number = MenuData.products.count { it.category.equals("Cake", true) }
+                    badge.backgroundColor = ContextCompat.getColor(this, R.color.brand_terracotta)
+                }
             }
+
+            binding.tabLayoutMenu.addTab(tab)
         }
+
+        binding.tabLayoutMenu.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.let {
+                    selectedCategory = categories.getOrElse(it.position) { "Semua" }
+                    updateProductList()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
     }
 
     private fun setupSearch() {
