@@ -61,17 +61,7 @@ open class ProfilMemberActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle("Logout")
                 .setMessage("Apakah kamu yakin ingin logout?")
-                .setPositiveButton("Ya") { dialog, _ ->
-                    val editor = sharedPref.edit()
-                    editor.putBoolean("isLogin", false)
-                    editor.remove("current_username")
-                    editor.apply()
-                    dialog.dismiss()
-
-                    val intent = Intent(this, SplashScreenActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                }
+                .setPositiveButton("Ya") { dialog, _ -> dialog.dismiss(); performLogout() }
                 .setNegativeButton("Tidak") { dialog, _ -> dialog.dismiss() }
                 .show()
         }

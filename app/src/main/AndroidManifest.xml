@@ -94,6 +94,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity android:name=".RiwayatActivity" android:exported="false" />
+        <activity android:name=".PromoActivity" android:exported="false" />
+        <activity android:name=".RewardsActivity" android:exported="false" />
+
     </application>
 
 </manifest>

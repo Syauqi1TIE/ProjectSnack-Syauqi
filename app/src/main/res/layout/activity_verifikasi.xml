@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/poppinsregular"
-                android:text="Periksa kembali seluruh isian SharedPreferences di bawah ini:"
+                android:text="Periksa kembali data pendaftaranmu sebelum dikirim:"
                 android:textColor="@color/brand_cream"
                 android:textSize="12sp" />
 

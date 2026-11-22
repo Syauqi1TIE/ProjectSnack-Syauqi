@@ -9,6 +9,9 @@ import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
+import com.example.sre_snickers.util.CartManager
+import com.example.sre_snickers.util.SessionManager
 
 fun Activity.setupBottomNavigation(bottomNav: BottomNavigationView, currentItemId: Int) {
     if (currentItemId != 0 && bottomNav.menu.findItem(currentItemId) != null) {
@@ -56,7 +59,6 @@ fun Activity.setupBottomNavigation(bottomNav: BottomNavigationView, currentItemI
         }
     }
 }
-
 fun Activity.setupToolbarLogout(toolbar: MaterialToolbar) {
     toolbar.setOnMenuItemClickListener { menuItem ->
         when (menuItem.itemId) {
@@ -71,16 +73,8 @@ fun Activity.setupToolbarLogout(toolbar: MaterialToolbar) {
                     .setTitle("Logout")
                     .setMessage("Apakah kamu yakin ingin logout?")
                     .setPositiveButton("Ya") { dialog, _ ->
-                        val sharedPref = getSharedPreferences("user_pref", Activity.MODE_PRIVATE)
-                        val editor = sharedPref.edit()
-                        editor.putBoolean("isLogin", false)
-                        editor.remove("current_username")
-                        editor.apply()
                         dialog.dismiss()
-
-                        val intent = Intent(this, SplashScreenActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
+                        performLogout()
                     }
                     .setNegativeButton("Tidak") { dialog, _ -> dialog.dismiss() }
                     .show()
@@ -101,5 +95,23 @@ fun Activity.setupWhatsAppFab(fab: FloatingActionButton) {
         } catch (e: Exception) {
             Toast.makeText(this, "Tidak dapat membuka WhatsApp", Toast.LENGTH_SHORT).show()
         }
+    }
+}
+fun Activity.performLogout() {
+    SessionManager(this).logout()
+    CartManager.clear()
+    val intent = Intent(this, SplashScreenActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(intent)
+}
+
+fun Activity.updateCartBadge(bottomNav: BottomNavigationView) {
+    val count = CartManager.totalQty()
+    if (count > 0) {
+        val badge = bottomNav.getOrCreateBadge(R.id.nav_pesanan)
+        badge.number = count
+        badge.backgroundColor = ContextCompat.getColor(this, R.color.brand_terracotta)
+    } else {
+        bottomNav.removeBadge(R.id.nav_pesanan)
     }
 }

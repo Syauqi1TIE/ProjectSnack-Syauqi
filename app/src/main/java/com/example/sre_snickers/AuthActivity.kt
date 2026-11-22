@@ -8,7 +8,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.sre_snickers.data.api.ApiClient
+import com.example.sre_snickers.data.model.LoginRequest
 import com.example.sre_snickers.databinding.ActivityAuthBinding
+import com.example.sre_snickers.util.SessionManager
+import com.example.sre_snickers.util.apiCall
+import com.example.sre_snickers.util.friendlyMessage
+import kotlinx.coroutines.launch
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
@@ -20,53 +27,47 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val b = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(b.left, b.top, b.right, b.bottom)
             insets
         }
 
-        // Kode ini harus selalu dipanggil saat butuh akses "user_pref"
-        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
-
-        // Kondisi jika isLogin bernilai true
-        val isLogin = sharedPref.getBoolean("isLogin", false)
-        if (isLogin) {
+        val session = SessionManager(this)
+        if (session.isLoggedIn()) {
             startActivity(Intent(this, BerandaActivity::class.java))
             finish()
+            return
         }
 
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.btnLogin.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            // Ambil data username dan password dari SharedPreferences
-            val spUsername = sharedPref.getString("username", "") ?: ""
-            val spPassword = sharedPref.getString("password", "") ?: ""
-
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Silakan isi Username dan Password!", Toast.LENGTH_SHORT).show()
-            } else if (spUsername.isNotEmpty() && username == spUsername && password == spPassword) {
-                // Rule: username == username di SharedPreferences dan password == password di SharedPreferences
-                val editor = sharedPref.edit()
-                editor.putBoolean("isLogin", true)
-                editor.putString("current_username", username)
-                editor.apply()
+                return@setOnClickListener
+            }
 
-                Toast.makeText(this, "Login Berhasil! Selamat datang, $username", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, BerandaActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else {
-                AlertDialog.Builder(this)
-                    .setTitle("Login Gagal")
-                    .setMessage("Username atau password salah! Silahkan coba lagi.")
-                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                    .show()
+            setLoading(true)
+            lifecycleScope.launch {
+                val result = apiCall { ApiClient.service.login(LoginRequest(username, password)) }
+                setLoading(false)
+                result
+                    .onSuccess { res ->
+                        val user = res.user
+                        if (res.ok && user != null) {
+                            session.saveUser(user)
+                            Toast.makeText(this@AuthActivity, "Selamat datang, ${user.nama}!", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@AuthActivity, BerandaActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        } else {
+                            showFail(res.pesan)
+                        }
+                    }
+                    .onFailure { showFail(it.friendlyMessage()) }
             }
         }
 
@@ -74,5 +75,18 @@ class AuthActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        binding.btnLogin.isEnabled = !loading
+        binding.btnLogin.text = if (loading) "MEMPROSES..." else "SIGN IN"
+    }
+
+    private fun showFail(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Login Gagal")
+            .setMessage(message)
+            .setPositiveButton("OK") { d, _ -> d.dismiss() }
+            .show()
     }
 }

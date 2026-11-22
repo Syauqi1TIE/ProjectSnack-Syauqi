@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
+    app:cardBackgroundColor="@color/brand_cream"
     app:cardCornerRadius="16dp"
-    app:cardElevation="3dp"
-    app:cardBackgroundColor="@color/white">
+    app:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,40 +15,59 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgProduct"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:contentDescription="Gambar menu"
             android:scaleType="centerCrop"
-            android:contentDescription="Gambar menu"/>
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+
+        <TextView
+            android:id="@+id/tvProductCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppinsregular"
+            android:letterSpacing="0.1"
+            android:text="PASTRY"
+            android:textAllCaps="true"
+            android:textColor="@color/brand_terracotta"
+            android:textSize="10sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppinsregular"
+            android:maxLines="2"
+            android:minLines="2"
             android:text="Nama Menu"
             android:textColor="@color/brand_dark_navy"
             android:textSize="14sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvProductPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppinsregular"
             android:text="Rp 25.000"
             android:textColor="@color/brand_deep_brown"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Tambah"
-            app:cornerRadius="10dp"/>
-
+            android:fontFamily="@font/poppinsregular"
+            android:text="+ Tambah"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/brand_terracotta"
+            app:cornerRadius="10dp" />
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>

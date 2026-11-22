@@ -7,7 +7,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.sre_snickers.data.api.ApiClient
+import com.example.sre_snickers.data.model.RegisterRequest
 import com.example.sre_snickers.databinding.ActivityVerifikasiBinding
+import com.example.sre_snickers.util.apiCall
+import com.example.sre_snickers.util.friendlyMessage
+import kotlinx.coroutines.launch
 
 class VerifikasiActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVerifikasiBinding
@@ -18,82 +24,74 @@ class VerifikasiActivity : AppCompatActivity() {
         binding = ActivityVerifikasiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val b = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(b.left, b.top, b.right, b.bottom)
             insets
         }
 
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
-        // Ambil data dari SharedPreferences
-        val sharedPref = getSharedPreferences("user_pref", MODE_PRIVATE)
-        val nama = sharedPref.getString("nama", "") ?: ""
-        val email = sharedPref.getString("email", "") ?: ""
-        val dob = sharedPref.getString("tanggal_lahir", "") ?: ""
-        val gender = sharedPref.getString("jenis_kelamin", "") ?: ""
-        val username = sharedPref.getString("username", "") ?: ""
-        val password = sharedPref.getString("password", "") ?: ""
-        val confirmPassword = sharedPref.getString("confirm_password", "") ?: ""
+        val nama = intent.getStringExtra("nama") ?: ""
+        val email = intent.getStringExtra("email") ?: ""
+        val dob = intent.getStringExtra("dob") ?: ""
+        val gender = intent.getStringExtra("gender") ?: ""
+        val username = intent.getStringExtra("username") ?: ""
+        val password = intent.getStringExtra("password") ?: ""
 
-        // Tampilkan seluruh isian di TextView
-        binding.tvValNama.text = if (nama.isEmpty()) "(kosong)" else nama
-        binding.tvValEmail.text = if (email.isEmpty()) "(kosong)" else email
-        binding.tvValDob.text = if (dob.isEmpty()) "(kosong)" else dob
-        binding.tvValGender.text = if (gender.isEmpty()) "(kosong)" else gender
-        binding.tvValUsername.text = if (username.isEmpty()) "(kosong)" else username
-        binding.tvValPassword.text = if (password.isEmpty()) "(kosong)" else password
-        binding.tvValConfirmPassword.text = if (confirmPassword.isEmpty()) "(kosong)" else confirmPassword
+        binding.tvValNama.text = nama
+        binding.tvValEmail.text = email
+        binding.tvValDob.text = dob
+        binding.tvValGender.text = gender
+        binding.tvValUsername.text = username
+        // Password disamarkan
+        binding.tvValPassword.text = "•".repeat(password.length)
+        binding.tvValConfirmPassword.text = "•".repeat(password.length)
 
-        // Tombol Kembali -> Untuk kembali ke halaman registrasi untuk memperbaiki isian di SP
-        binding.btnKembali.setOnClickListener {
-            finish()
-        }
+        binding.btnKembali.setOnClickListener { finish() }
 
-        // Tombol Submit -> Lakukan validasi data yang sudah ada di SharedPreferences
         binding.btnSubmit.setOnClickListener {
-            // Validasi 1: Semua inputan tidak boleh kosong
-            if (nama.isEmpty() || email.isEmpty() || dob.isEmpty() || gender.isEmpty() ||
-                username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-
-                AlertDialog.Builder(this)
-                    .setTitle("Validasi Gagal")
-                    .setMessage("Semua inputan tidak boleh kosong! Silakan tekan tombol Kembali untuk melengkapi data registrasi.")
-                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                    .setNegativeButton("Kembali ke Registrasi") { _, _ -> finish() }
-                    .show()
-                return@setOnClickListener
-            }
-
-            // Validasi 2: Password dan Confirm Password harus sama
-            if (password != confirmPassword) {
-                AlertDialog.Builder(this)
-                    .setTitle("Validasi Gagal")
-                    .setMessage("Password dan Confirm Password tidak sama! Silakan tekan tombol Kembali untuk memperbaikinya.")
-                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                    .setNegativeButton("Kembali ke Registrasi") { _, _ -> finish() }
-                    .show()
-                return@setOnClickListener
-            }
-
-            // Jika berhasil melewati validasi
-            val editor = sharedPref.edit()
-            editor.putBoolean("isRegistered", true)
-            editor.apply()
-
-            AlertDialog.Builder(this)
-                .setTitle("Registrasi Berhasil")
-                .setMessage("Selamat! Data registrasi kamu telah terverifikasi dan berhasil disimpan.")
-                .setPositiveButton("Ke Halaman Login") { _, _ ->
-                    val intent = Intent(this, AuthActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
+            setLoading(true)
+            lifecycleScope.launch {
+                val result = apiCall {
+                    ApiClient.service.register(
+                        RegisterRequest(nama, email, dob, gender, username, password)
+                    )
                 }
-                .setCancelable(false)
-                .show()
+                setLoading(false)
+                result
+                    .onSuccess { res -> if (res.ok) showSuccess() else showError(res.pesan) }
+                    .onFailure { showError(it.friendlyMessage()) }
+            }
         }
+    }
+
+    private fun setLoading(loading: Boolean) {
+        binding.btnSubmit.isEnabled = !loading
+        binding.btnKembali.isEnabled = !loading
+        binding.btnSubmit.text = if (loading) "Memproses..." else "Submit"
+    }
+
+    private fun showSuccess() {
+        AlertDialog.Builder(this)
+            .setTitle("Registrasi Berhasil")
+            .setMessage("Akun kamu sudah dibuat. Silakan login.")
+            .setPositiveButton("Ke Halaman Login") { _, _ ->
+                val intent = Intent(this, AuthActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun showError(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Registrasi Gagal")
+            .setMessage(message)
+            .setPositiveButton("OK") { d, _ -> d.dismiss() }
+            .setNegativeButton("Kembali ke Registrasi") { _, _ -> finish() }
+            .show()
     }
 }
